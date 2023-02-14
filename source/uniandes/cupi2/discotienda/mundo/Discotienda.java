@@ -18,6 +18,8 @@ import java.io.*;
 import java.text.*;
 import java.util.*;
 
+import javax.swing.JOptionPane;
+
 /**
  * Es la clase que representa la tienda virtual con sus discos. <br>
  * <b>inv: </b> <br>
@@ -524,9 +526,20 @@ public class Discotienda
     
     public void discosCostosos () throws FileNotFoundException
     {
-    	File archivo = new File ("./data/reporteDiscos.txt");
+    	//Crear un archivo con la clase file 
+    	
+    	int generoDiscoBuscado=0;
+    	int precioDiscoBuscado=0;
+    	
+    	String generoDado = JOptionPane.showInputDialog("Diga un genero");
+    	
+    	File archivo = new File ("./data/reporteDiscosCostosos.txt");
+    	
+    	//Crear la pluma
     	
     	PrintWriter pluma = new PrintWriter (archivo);
+    	
+    	//Escribir con la pluma 
     	
     	pluma.println("Reporte de discos");
     	pluma.println("=================");
@@ -535,18 +548,45 @@ public class Discotienda
     	{
     		Disco miDisco = (Disco)discos.get(i);
     		
-    		if (miDisco.darGenero().equals("Pop")&&miDisco.darPrecioDisco()>1000)
+    		if (miDisco.darGenero().equals(generoDado))
     		{
     			
+    		generoDiscoBuscado++;
     		
+    		if(miDisco.darPrecioDisco()>1000)
+    			
+    		{
+    			
+    		pluma.println("Nombre:"+miDisco.darNombreDisco());
+    		pluma.println("Artista:"+miDisco.darArtista());
+    		pluma.println("Genero:"+miDisco.darGenero());
+    		pluma.println("Precio:"+miDisco.darPrecioDisco());
     		
-    		pluma.println("Nombre: " + miDisco.darNombreDisco()+
-    					  "Artista: " + miDisco.darArtista()+
-    					  "Genero:" + miDisco.darGenero());
-    		}			
+    		precioDiscoBuscado++;
+    		
+    		}
+    		
+    		}
+    		
     	}
     	
+    	if (generoDiscoBuscado > 0 && precioDiscoBuscado > 0)
+    		
+    	{
+    		JOptionPane.showMessageDialog(null, "El genero de disco ha sido encontrado");
+    	}
+    		
+    	else if (generoDiscoBuscado == 0 || precioDiscoBuscado == 0 )
+    		
+    	{
+    		
+    		JOptionPane.showMessageDialog(null, "El genero de disco ingresado no cumple con los datos");
+    		
+    	}
+    	
+    	
     	pluma.close();
+    	
     }
 
     // -----------------------------------------------------------------
@@ -563,7 +603,7 @@ public class Discotienda
         	generarInformeDiscos ();
         	return "Reporte generado satisfactoriamente";
 		} catch (Exception e) {
-			return "error fatal" + e.getMessage();
+			return "Error fatal" + e.getMessage();
 		}
     }
 
@@ -575,9 +615,9 @@ public class Discotienda
     {
     	try {
         	discosCostosos ();
-        	return "Reporte generado satisfactoriamente";
-		} catch (Exception e) {
-			return "error fatal" + e.getMessage();
+        	return "Reporte generado fue generado satisfactoriamente";
+		} catch (FileNotFoundException e) {
+			return "Error fatal" + e.getMessage();
 		}
     }
 
