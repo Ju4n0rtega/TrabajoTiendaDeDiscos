@@ -589,11 +589,11 @@ public class Discotienda
     
 
     // -----------------------------------------------------------------
-    // Puntos de Extension
+    // Puntos de Extension  
     // -----------------------------------------------------------------
 
     /**
-     * Es el punto de extensi�n 1
+     * Es el punto de Extension 1
      * @return respuesta 1
      */
     public String metodo1( )
