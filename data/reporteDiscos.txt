@@ -1,3 +1,6 @@
 Reporte de discos
 =================
-Nombre: Confessions on a Dance FloorArtista: MadonnaGenero:Pop
+Nombre: Confessions on a Dance Floor
+Artista: Madonna
+Genero: Pop
+Precio: 3600.0

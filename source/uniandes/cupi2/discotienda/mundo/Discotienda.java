@@ -18,6 +18,8 @@ import java.io.*;
 import java.text.*;
 import java.util.*;
 
+import javax.swing.JOptionPane;
+
 /**
  * Es la clase que representa la tienda virtual con sus discos. <br>
  * <b>inv: </b> <br>
@@ -524,6 +526,12 @@ public class Discotienda
     
     public void discosCostosos () throws FileNotFoundException
     {
+    	
+    	int generoDelDiscoBuscado =0;
+    	int precioDelDiscoBuscado = 0;
+    	
+    	String generoDado = JOptionPane.showInputDialog("Escriba su genero");
+    	
     	File archivo = new File ("./data/reporteDiscos.txt");
     	
     	PrintWriter pluma = new PrintWriter (archivo);
@@ -535,19 +543,50 @@ public class Discotienda
     	{
     		Disco miDisco = (Disco)discos.get(i);
     		
-    		if (miDisco.darGenero().equals("Pop")&&miDisco.darPrecioDisco()>1000)
+    		if (miDisco.darGenero().equals (generoDado))
     		{
     			
+    		generoDelDiscoBuscado++;
+    		
+    		if(miDisco.darPrecioDisco()>1000)
+    			
+    		{	
+    		
+    		pluma.println("Nombre: " + miDisco.darNombreDisco());
+    		pluma.println("Artista: " + miDisco.darArtista());
+    		pluma.println("Genero: " + miDisco.darGenero());
+    		pluma.println("Precio: " + miDisco.darPrecioDisco());
+    		
+    		precioDelDiscoBuscado++;
     		
     		
-    		pluma.println("Nombre: " + miDisco.darNombreDisco()+
-    					  "Artista: " + miDisco.darArtista()+
-    					  "Genero:" + miDisco.darGenero());
-    		}			
+    			}			
+    		}
+    	
     	}
     	
-    	pluma.close();
+    	
+    		if(generoDelDiscoBuscado > 0 && precioDelDiscoBuscado > 0)
+    			
+    		{
+    			
+    			JOptionPane.showMessageDialog(null, "El genero del diasco ha sido encontrado");
+    			
+    		}
+    		
+    		else if (generoDelDiscoBuscado == 0 || precioDelDiscoBuscado == 0)
+    			
+    		{
+    			
+    			JOptionPane.showMessageDialog(null, "El disco ingresado no cumple con los datos");
+    			
+    		}
+    		
+    		
+    		pluma.close();
     }
+    		
+    
 
     // -----------------------------------------------------------------
     // Puntos de Extensi�n
@@ -576,7 +615,7 @@ public class Discotienda
     	try {
         	discosCostosos ();
         	return "Reporte generado satisfactoriamente";
-		} catch (Exception e) {
+		} catch (FileNotFoundException e) {
 			return "error fatal" + e.getMessage();
 		}
     }
